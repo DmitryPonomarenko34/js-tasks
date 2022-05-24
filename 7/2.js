@@ -38,28 +38,26 @@ function collect(array) {
 
   if (findSubArray) {
     array = array.flat();
-    collect(array);
+    return collect(array);
+  } else {
+    const newArray = array.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    return newArray;
   }
-
-  console.log(array);
-  const newArray = array.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-  console.log(newArray);
-  return newArray;
 }
 
 const array1 = [[[1, 2], [1, 2]], [[2, 1], [1, 2]]];
 console.log(collect(array1)); // 12
 
-// const array2 = [[[[[1, 2]]]]];
-// console.log(collect(array2)); // 3
+const array2 = [[[[[1, 2]]]]];
+console.log(collect(array2)); // 3
 
-// const array3 = [[[[[1, 2]]], 2], 1];
-// console.log(collect(array3)); // 6
+const array3 = [[[[[1, 2]]], 2], 1];
+console.log(collect(array3)); // 6
 
-// const array4 = [[[[[]]]]];
-// console.log(collect(array4)); // 0
+const array4 = [[[[[]]]]];
+console.log(collect(array4)); // 0
 
-// const array5 = [[[[[], 3]]]];
-// console.log(collect(array5)); // 3
+const array5 = [[[[[], 3]]]];
+console.log(collect(array5)); // 3
 
 exports.collect = collect;
