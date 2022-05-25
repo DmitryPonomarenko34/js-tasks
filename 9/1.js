@@ -15,30 +15,22 @@
  */
 
 // Решение
+function shallowMerge(obj1, obj2) {
+  if (!(obj1 instanceof Object || obj2 instanceof Object)) {
+    throw new Error('this is not object');
+  }
+
+  let newObj = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj1));
+  newObj = Object.defineProperties(newObj, Object.getOwnPropertyDescriptors(obj2));
+
+  return newObj;
+}
 
 const user = { firstName: 'Marcus', lastName: 'Kronenberg' };
 const userData = { job: 'developer', country: 'Germany', lastName: 'Schmidt' };
 
 Object.defineProperty(user, 'firstName', { writable: false });
 Object.defineProperty(userData, 'job', { configurable: false });
-
-function shallowMerge(obj1, obj2) {
-    if (!(obj1 instanceof Object || obj2 instanceof Object)) {
-      throw new Error('this is not object');
-    }
-
-    const obj1Entries = Object.entries(obj1);
-    const obj2Entries = Object.entries(obj2);
-
-    const concatArray = obj1Entries.concat(obj2Entries);
-
-    const newArray = Object.fromEntries(concatArray);
-
-    console.log(Object.getOwnPropertyDescriptor(newArray, 'firstName').writable);
-
-    return newArray;
-
-}
 
 const result = shallowMerge(user, userData);
 
