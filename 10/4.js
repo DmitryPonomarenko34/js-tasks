@@ -28,6 +28,25 @@
 
 // Решение
 
+function compose(...rest) {
+    const funcCheck = rest.every(el => typeof el === 'function');
+
+    const undefCheck = rest
+    .map(el => el())
+    .some(el => el === undefined);
+
+    if (!funcCheck) {
+        throw new Error('params has not function value or not return value');
+    } else if (undefCheck) {
+        throw new Error("callback at index 0 did not return any value.");
+    }
+
+    return (param) => {
+        const result = rest.reduceRight((acc, item) => item(acc), param);
+        return result;
+    }
+}
+
 const result1 = compose(
     prevResult => prevResult + 'o',
     prevResult => prevResult + 'l',

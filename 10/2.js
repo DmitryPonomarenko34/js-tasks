@@ -20,18 +20,21 @@
 // Решение
 
 function calculate(...rest) {
-    const funcCheck = rest.every(el => typeof el === 'function');
+    // debugger;
+    const funcCheck = rest.every(el => typeof el === 'function' && el !== undefined);
 
     if (!funcCheck) {
-        throw new Error('params has not function value');
+        throw new Error('params has not function value or not return value');
     }
 
-    for (let i = 0; i < rest.length; i++) {
-        const element = array[i];
+    const result = rest.reduce((acc, item) => {
+        item(acc);
 
-    }
+        if(item() === undefined) {
+            throw new Error('callback at index 0 did not return any value.');
+        }
 
-    const result = rest.map(el => el());
+    }, rest[0]());
 
     return result;
 }

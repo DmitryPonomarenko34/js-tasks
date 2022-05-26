@@ -24,12 +24,59 @@
 
 // Решение
 
+function calculateAdvanced(...rest) {
+    function Info(value, errors) {
+        this.value = value;
+        this.errors = errors;
+    }
+
+    const funcCheck = rest.every(el => typeof el === 'function');
+
+    if (!funcCheck) {
+        throw new Error('params has not function value or not return value');
+    }
+
+    const valueResult = rest.reduce((acc, item) => {
+        try {
+            if (typeof acc === undefined || item() === undefined) {
+                return acc;
+            } else {
+                return item(acc);
+            }
+        }
+        catch (err) {
+            return acc;
+        }
+    });
+
+    const valueErrors = rest
+        .map((item, index) => {
+            try {
+                if (item() === undefined) {
+                    throw new Error("callback at index 0 did not return any value.");
+                }
+            }
+            catch (err) {
+                const errObj = {
+                    index: index,
+                    name: err.name,
+                    message: err.message,
+                }
+
+                return errObj;
+            }
+        })
+        .filter((item) => item instanceof Object );
+
+    return new Info(valueResult, valueErrors);
+}
+
 const result = calculateAdvanced(
-    () => {},
+    () => { },
     () => {
         return 7;
     },
-    () => {},
+    () => { },
     prevResult => {
         return prevResult + 4;
     },
