@@ -28,11 +28,12 @@ function calculate(...rest) {
     }
 
     const result = rest.reduce((acc, item) => {
-        item(acc);
-
+        
         if(item() === undefined) {
             throw new Error('callback at index 0 did not return any value.');
         }
+
+        return item(acc);
 
     }, rest[0]());
 
