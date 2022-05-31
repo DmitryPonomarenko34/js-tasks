@@ -19,15 +19,20 @@
  * - Решить задачу в стиле прототипного наследования JavaScript.
  */
 
-function Developer() {}
+function Developer() {
+    this.completedTasks = [];
+}
 
-Developer.prototype.completedTasks = [];
 Developer.prototype.completeTask = function(task) {
     this.completedTasks.push(task);
 };
 
 const developer1 = new Developer();
 const developer2 = new Developer();
+
+console.log(developer1);
+console.log(developer2);
+
 
 developer1.completeTask('finish a feature');
 developer1.completeTask('refactor code');

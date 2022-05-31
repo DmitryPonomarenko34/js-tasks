@@ -20,6 +20,12 @@
  * - в реализации метода delay(ms) обязательно использовать setTimeout.
  */
 
+ Function.prototype.delay = function (ms) {
+    setTimeout(this, ms);
+
+    return (...args) => setTimeout(this, ms, ...args); 
+ }
+
 function sayHello() {
     console.log('Hello!');
 }
