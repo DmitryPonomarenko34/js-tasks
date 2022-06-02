@@ -127,7 +127,7 @@ class DB {
     }
 
     find = (query) => {
-        const newArray = [];
+        let newArray = [];
 
         for (const item of this.map) {
             if (typeof query.name === 'string') {
@@ -145,7 +145,6 @@ class DB {
             if (typeof query.salary === 'object') {
                 if (query.salary.min > item[1].salary || query.salary.max < item[1].salary) continue; 
             }
-
             newArray.push(item[1]);
         }
 
@@ -165,8 +164,8 @@ const person = {
 const person2 = {
     name: 'Anna', // обязательное поле с типом string
     age: 21, // обязательное поле с типом number
-    country: 'ru', // обязательное поле с типом string
-    salary: 1000 // обязательное поле с типом number
+    country: 'ua', // обязательное поле с типом string
+    salary: 500 // обязательное поле с типом number
 };
 
 const id = db.create(person);
