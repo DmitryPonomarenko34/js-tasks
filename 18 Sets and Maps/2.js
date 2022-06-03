@@ -127,28 +127,29 @@ class DB {
     }
 
     find = (query) => {
-        let newArray = [];
-
-        for (const item of this.map) {
+        const newArray2 = Array.from(this.map)
+        .filter((item, index) => {
             if (typeof query.name === 'string') {
-                if (query.name !== item[1].name) continue;
+                if (query.name !== item[1].name) return;
             }
 
             if (typeof query.country === 'string') {
-                if (query.country !== item[1].country) continue;
+                if (query.country !== item[1].country) return;
             }
 
             if (typeof query.age === 'object') {
-                if (query.age.min > item[1].age || query.age.max < item[1].age) continue; 
+                if (query.age.min > item[1].age || query.age.max < item[1].age) return; 
             }
 
             if (typeof query.salary === 'object') {
-                if (query.salary.min > item[1].salary || query.salary.max < item[1].salary) continue; 
+                if (query.salary.min > item[1].salary || query.salary.max < item[1].salary) return; 
             }
-            newArray.push(item[1]);
-        }
 
-        return newArray;
+            return item
+        })
+        .map(item => item[1]);
+
+        return newArray2;
     }
 }
 
@@ -164,8 +165,8 @@ const person = {
 const person2 = {
     name: 'Anna', // обязательное поле с типом string
     age: 21, // обязательное поле с типом number
-    country: 'ua', // обязательное поле с типом string
-    salary: 500 // обязательное поле с типом number
+    country: 'ru', // обязательное поле с типом string
+    salary: 1000000 // обязательное поле с типом number
 };
 
 const id = db.create(person);

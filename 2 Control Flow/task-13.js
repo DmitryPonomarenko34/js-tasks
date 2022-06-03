@@ -12,12 +12,3 @@ for (const iterator of array) {
     break;
   }
 }
-
-// for (let i = 0; i < array.length; i++) {
-//   const element = array[i];
-
-//   if (element === 4) {
-//     console.log('Есть!');
-//     break;
-//   }
-// }

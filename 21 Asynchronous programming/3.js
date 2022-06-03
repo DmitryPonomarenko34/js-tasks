@@ -1,5 +1,4 @@
 // # Задача 3
-
 // Создайте функцию `send` которая будет оберткой для функции `get` которая поддерживает только `callback` технологию.
 
 // **Обратите внимание**:
@@ -16,25 +15,37 @@
 // ```javascript
 const get = require('fetch').fetchUrl;
 
-const url = 'https://lab.lectrum.io/geo/api/countries?size=2';
-get(url, (error, meta, body) => {
-	const { data } = JSON.parse(body);
-	console.log(data);
-});
-// ```
+const url = 'https://jsonplaceholder.typicode.com/users';
 
-// **После рефакторинга**
 
-// ```javascript
-// const get = require('fetch').fetchUrl;
-// const url = 'https://lab.lectrum.io/geo/api/countries?size=2';
+const getData = url => {
+	return new Promise((resolve, reject) => {
+		get(url, (error, meta, body, status) => {
+			const newArray = [];
 
-// send(url)
-//     .then(data => {
-//         console.log(data);
-//     })
-//     .catch(error => {
-//         console.log(error);
-//     });
-// ```
+			if (error) {
+				return reject('We have error: ' + error.message);
+			}
 
+			const users = JSON.parse(body);
+
+			for (const iterator of users) {
+				if (iterator.address) {
+					newArray.push(iterator.address);
+				}
+			}
+
+			if (meta.status === 200) {
+				return resolve(newArray);
+			}
+		});
+	});
+};
+
+getData(url)
+	.then(data => {
+		console.log(data);
+	})
+	.catch(error => {
+		console.log(error);
+	});
